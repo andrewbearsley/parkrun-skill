@@ -1,0 +1,7 @@
+CLAUDE.md
+.cursorrules
+.cursor/
+.env
+.env.local
+.env.*
+!.env.example
