@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# parkrun-status.sh - Scrape parkrun results from the public athlete page
+# parkrun-status.sh - Fetch parkrun results from the public athlete page
 #
 # Usage: ./parkrun-status.sh [--raw] [--json] [--all] [--count N] [--summary] [--tourism]
 #   --raw       Output raw HTML from the results page

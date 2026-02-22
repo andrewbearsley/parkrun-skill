@@ -4,9 +4,9 @@
 ![Bash](https://img.shields.io/badge/bash-%23121011?logo=gnu-bash&logoColor=white)
 ![License](https://img.shields.io/github/license/andrewbearsley/parkrun-skill)
 
-Monitor [parkrun](https://www.parkrun.com.au/) results by scraping the public athlete results page. Built as an [OpenClaw](https://openclaw.ai) skill, but the scripts work fine standalone too.
+Monitor [parkrun](https://www.parkrun.com.au/) results from the public athlete results page. Built as an [OpenClaw](https://openclaw.ai) skill, but the scripts work fine standalone too.
 
-Tracks run history, finish times, positions, age grading, PBs, and event tourism. Results are scraped from the public parkrun website — no API key or authentication needed.
+Tracks run history, finish times, positions, age grading, PBs, and event tourism. Reads the public parkrun website directly — no API key or authentication needed.
 
 ## Agent quick-start
 
@@ -51,7 +51,7 @@ $SCRIPT_DIR/parkrun-status.sh --json
 $SCRIPT_DIR/parkrun-status.sh --summary
 ```
 
-**4. Read the SKILL.md** for full scraping details, alert thresholds, and heartbeat behaviour. Everything the agent needs is in that file.
+**4. Read the SKILL.md** for full details, alert thresholds, and heartbeat behaviour. Everything the agent needs is in that file.
 
 ## What it does
 
@@ -136,19 +136,19 @@ All thresholds are configurable in `SKILL.md`. The skill stays quiet when everyt
 | "PARKRUN_ATHLETE_ID environment variable is not set" | Env var not loaded | Set `PARKRUN_ATHLETE_ID` in your environment |
 | HTTP 403 | Site is blocking automated requests | Check the URL manually in a browser; the user-agent may need updating |
 | HTTP 404 | Wrong athlete ID or wrong country domain | Verify by visiting `https://{domain}/parkrunner/{id}/all/` |
-| "Unexpected page structure" | parkrun changed their HTML | Check the page manually; the scraper may need updating |
+| "Unexpected page structure" | parkrun changed their HTML | Check the page manually; the parser may need updating |
 | Results from wrong country | Wrong `PARKRUN_DOMAIN` | Set `PARKRUN_DOMAIN` to the correct country (e.g. `www.parkrun.org.uk`) |
 
 ## Data source
 
-This skill scrapes the public parkrun results page. There is no official parkrun API for athlete results (the previous athlete endpoint was deprecated and the replacement is on hold). The scraper makes a single HTTP request per invocation with a standard browser user-agent.
+This skill reads the public parkrun results page. There is no official parkrun API for athlete results (the previous athlete endpoint was deprecated and the replacement is on hold). One HTTP request per invocation.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `skills/parkrun/SKILL.md` | Skill definition: scraping details, alert thresholds, agent instructions |
-| `scripts/parkrun-status.sh` | Scrape and display parkrun results |
+| `skills/parkrun/SKILL.md` | Skill definition: data source details, alert thresholds, agent instructions |
+| `scripts/parkrun-status.sh` | Fetch and display parkrun results |
 | `HEARTBEAT.md` | Heartbeat config template |
 
 ## License

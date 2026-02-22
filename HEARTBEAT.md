@@ -23,5 +23,5 @@ automatic parkrun result monitoring on the heartbeat cycle:
 |-----------|--------|
 | No parkrun in 14 days | Medium alert (2 missed weeks) |
 | Page unreachable (403, timeout) | Alert if it persists across multiple heartbeats |
-| HTML structure changed | Alert (scraper may need updating) |
+| HTML structure changed | Alert (parser may need updating) |
 | New PB | Mention in the result summary |

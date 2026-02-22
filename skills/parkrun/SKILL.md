@@ -1,6 +1,6 @@
 ---
 name: parkrun
-description: Monitor parkrun results by scraping the public athlete results page.
+description: Monitor parkrun results from the public athlete results page.
 version: 1.0.0
 homepage: https://github.com/andrewbearsley/parkrun-skill
 metadata: {"openclaw": {"requires": {"bins": ["curl", "awk", "sed"], "env": ["PARKRUN_ATHLETE_ID"]}, "primaryEnv": "PARKRUN_ATHLETE_ID"}}
@@ -8,12 +8,12 @@ metadata: {"openclaw": {"requires": {"bins": ["curl", "awk", "sed"], "env": ["PA
 
 # parkrun Skill
 
-You can monitor parkrun results by scraping the public athlete results page. This skill scrapes the athlete's "all results" page to extract run history, PBs, and event tourism stats.
+You can monitor parkrun results from the public athlete results page. This skill reads the athlete's "all results" page to extract run history, PBs, and event tourism stats.
 
 **Data Source:** Public HTML page at `https://{domain}/parkrunner/{id}/all/`
 **Authentication:** None required. parkrun results pages are public. Just need the athlete ID.
 
-**Important:** There is no official parkrun API for athlete results. This skill scrapes the public HTML page. Limit to one request per invocation — no rapid polling.
+**Important:** There is no official parkrun API for athlete results. This skill reads the public HTML page directly. Limit to one request per invocation — no rapid polling.
 
 **Script paths:** All `scripts/` paths below are relative to the skill's install directory. If installed via the agent quick-start, that's `~/.openclaw/skills/parkrun/scripts/`. Adjust paths based on where you installed the skill.
 
@@ -37,7 +37,7 @@ These are the default alert thresholds. The user may edit them here to suit thei
 
 ## Error Handling
 
-The scrape can fail in several ways. Handle each:
+The fetch can fail in several ways. Handle each:
 
 ### HTTP errors
 
@@ -46,7 +46,7 @@ The scrape can fail in several ways. Handle each:
 | HTTP 403 (Forbidden) | The site is blocking the request. The user-agent header may need updating. Alert: "parkrun page returned 403 — try visiting the URL manually to check." |
 | HTTP 404 (Not found) | Wrong athlete ID or domain. Alert: "parkrun athlete not found — check PARKRUN_ATHLETE_ID and PARKRUN_DOMAIN." |
 | Connection timeout / network error | Log and skip this check. Alert if it persists across multiple heartbeats. |
-| Unexpected HTML structure | The expected table headers (`Run Date`, `Run Number`, etc.) are missing. Alert: "parkrun page structure may have changed — the scraper could not find the results table." |
+| Unexpected HTML structure | The expected table headers (`Run Date`, `Run Number`, etc.) are missing. Alert: "parkrun page structure may have changed — could not find the results table." |
 
 ### Common setup issues
 
@@ -54,7 +54,7 @@ The scrape can fail in several ways. Handle each:
 |---------|-------|-----|
 | "PARKRUN_ATHLETE_ID environment variable is not set" | Env var not loaded | Set `PARKRUN_ATHLETE_ID` in the environment |
 | HTTP 404 | Wrong athlete ID or wrong domain | Verify the ID by visiting `https://{domain}/parkrunner/{id}/all/` in a browser |
-| No results parsed | HTML structure changed | Check the page manually; the scraper may need updating |
+| No results parsed | HTML structure changed | Check the page manually; the parser may need updating |
 | Results from wrong country | Wrong domain | Set `PARKRUN_DOMAIN` to the correct country domain (e.g. `www.parkrun.org.uk`) |
 
 ---
@@ -92,7 +92,7 @@ Plus header info: athlete name, total parkrun count, age category, club membersh
 
 ---
 
-## Scraping Details
+## Fetching Results
 
 ```bash
 # Easiest: use the helper script
@@ -152,7 +152,7 @@ Compare the date to your last known result (from agent memory).
 | No parkrun in 14 days | Medium | No parkrun result in the last 14 days |
 | HTTP 403 (blocked) | Medium | parkrun page returned 403 — site may be blocking requests |
 | HTTP 404 (not found) | Medium | parkrun athlete not found — check PARKRUN_ATHLETE_ID |
-| HTML structure changed | Medium | parkrun page structure may have changed — scraper needs updating |
+| HTML structure changed | Medium | parkrun page structure may have changed — parser may need updating |
 | New PB | Note | New PB at {event}: {time} (position {pos}) |
 
 ### 5. Reporting
@@ -214,7 +214,7 @@ parkrun Stats (164 parkruns):
 
 One helper script in the skill's parent project:
 
-- **`scripts/parkrun-status.sh`** Scrape and display parkrun results. Run with `--raw`, `--json`, `--all`, `--count N`, `--summary`, `--tourism`.
+- **`scripts/parkrun-status.sh`** Fetch and display parkrun results. Run with `--raw`, `--json`, `--all`, `--count N`, `--summary`, `--tourism`.
 
 ---
 
