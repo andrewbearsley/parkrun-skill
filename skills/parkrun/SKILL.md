@@ -2,7 +2,7 @@
 name: parkrun
 description: Monitor parkrun results by scraping the public athlete results page.
 version: 1.0.0
-homepage: https://github.com/andrewbearsley/openclaw-parkrun
+homepage: https://github.com/andrewbearsley/parkrun-skill
 metadata: {"openclaw": {"requires": {"bins": ["curl", "awk", "sed"], "env": ["PARKRUN_ATHLETE_ID"]}, "primaryEnv": "PARKRUN_ATHLETE_ID"}}
 ---
 
